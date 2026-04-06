@@ -22,5 +22,10 @@ class Folder extends Model
     public function files() {
         return $this->hasMany(File::class);
     }
+    
+    public function sharedWith()
+    {
+        return $this->belongsToMany(User::class, 'folder_user');
+    }
 
 }

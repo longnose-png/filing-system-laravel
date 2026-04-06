@@ -22,7 +22,6 @@
 
 <!-- CATEGORY TABS (Documents, Images, Videos) -->
 <div class="row g-4 mb-5">
-    <!-- Documents Tab -->
     <div class="col-md-4">
         <a href="{{ route('category.show', 'document') }}" class="text-decoration-none">
             <div class="card border-0 shadow-sm h-100 bg-white p-3 card-hover" style="border-left: 5px solid #0d6efd !important;">
@@ -39,7 +38,6 @@
         </a>
     </div>
 
-    <!-- Images Tab -->
     <div class="col-md-4">
         <a href="{{ route('category.show', 'image') }}" class="text-decoration-none">
             <div class="card border-0 shadow-sm h-100 bg-white p-3 card-hover" style="border-left: 5px solid #198754 !important;">
@@ -56,7 +54,6 @@
         </a>
     </div>
 
-    <!-- Videos Tab -->
     <div class="col-md-4">
         <a href="{{ route('category.show', 'video') }}" class="text-decoration-none">
             <div class="card border-0 shadow-sm h-100 bg-white p-3 card-hover" style="border-left: 5px solid #ffc107 !important;">
@@ -81,22 +78,22 @@
         <a href="{{ route('folders.index') }}" class="btn btn-sm btn-link text-decoration-none p-0">View All</a>
     </div>
     <div class="row g-3">
-        @forelse($myFolders->take(4) as $folder)
-        <div class="col-md-3">
-            <a href="{{ route('folders.show', $folder->id) }}" class="text-decoration-none">
-                <div class="card border-0 shadow-sm text-center p-3 h-100 bg-white">
-                    <i class="bi bi-folder-fill fs-1 text-warning mb-2"></i>
-                    <h6 class="text-dark mb-1">{{ $folder->name }}</h6>
-                    @if($folder->password)
-                        <span class="badge bg-light text-muted fw-normal"><i class="bi bi-lock-fill me-1"></i>Secure</span>
-                    @endif
-                </div>
-            </a>
-        </div>
+        @forelse($myFolders as $folder)
+            <div class="col-md-3">
+                <a href="{{ route('folders.show', $folder->id) }}" class="text-decoration-none text-dark">
+                    <div class="card p-3 text-center shadow-sm border-0 bg-white card-hover">
+                        <i class="bi bi-folder-fill text-warning fs-1"></i>
+                        <h6 class="mt-2 mb-1">{{ $folder->name }}</h6>
+                        @if($folder->password) 
+                            <i class="bi bi-lock-fill text-muted small"></i> 
+                        @endif
+                    </div>
+                </a>
+            </div>
         @empty
-        <div class="col-12 text-center py-4 bg-white rounded shadow-sm border border-dashed">
-            <p class="text-muted mb-0">No folders yet. Click "New Folder" to organize your files.</p>
-        </div>
+            <div class="col-12 text-center py-4 bg-white rounded shadow-sm border border-dashed">
+                <p class="text-muted mb-0">No folders yet. Click "New Folder" to organize your files.</p>
+            </div>
         @endforelse
     </div>
 </div>
@@ -122,10 +119,18 @@
                             <i class="bi bi-file-earmark-fill text-primary me-2"></i> {{ $file->name }}
                         </td>
                         <td><span class="badge rounded-pill bg-light text-dark border">{{ ucfirst($file->type) }}</span></td>
-                        <td>{{ $file->created_at->format('M d, Y') }}</td>
+                        <td>{{ $file->created_at->diffForHumans() }}</td>
                         <td class="pe-4 text-end">
-                            <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn btn-sm btn-light border"><i class="bi bi-eye"></i></a>
-                            <button class="btn btn-sm btn-light border text-danger"><i class="bi bi-trash"></i></button>
+                            <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn btn-sm btn-light border me-1">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <form action="{{ route('files.destroy', $file->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-light border text-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @empty
@@ -143,8 +148,8 @@
 </div>
 
 <style>
-    .card-hover { transition: all 0.2s ease-in-out; }
-    .card-hover:hover { transform: scale(1.02); background-color: #fcfcfc !important; }
+    .card-hover { transition: all 0.2s ease-in-out; border: 1px solid transparent !important; }
+    .card-hover:hover { transform: scale(1.02); background-color: #fcfcfc !important; border: 1px solid #dee2e6 !important; }
 </style>
 
 @endsection

@@ -46,4 +46,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    // This allows a user to see all folders shared WITH them
+    public function sharedFolders()
+    {
+         return $this->belongsToMany(Folder::class, 'folder_user');
+    }
+
+    public function friends()
+    {
+         return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id', 'folder_user');
+    }
 }
