@@ -5,138 +5,122 @@
 @section('content')
 
 <!-- Header Section -->
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="flex items-left justify-between mb-8">
     <div>
-        <h2 class="fw-bold mb-1">Dashboard</h2>
-        <p class="text-muted">Quick access to your files and categories</p>
+       
     </div>
-    <div class="d-flex gap-2">
-        <button class="btn btn-outline-dark shadow-sm px-4 rounded-pill" data-bs-toggle="modal" data-bs-target="#newFolderModal">
-            <i class="bi bi-folder-plus me-1"></i> New Folder
+    <div class="flex gap-3">
+        <button x-data @click="$dispatch('open-folder-modal')" class="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-2">
+            <i class="bi bi-folder-plus text-lg"></i> New Folder
         </button>
-        <button class="btn btn-primary shadow-sm px-4 rounded-pill" data-bs-toggle="modal" data-bs-target="#uploadFileModal">
-            <i class="bi bi-cloud-arrow-up me-1"></i> Upload File
+        <button x-data @click="$dispatch('open-upload-modal')" class="px-5 py-2.5 bg-[#26282A] text-white rounded-xl text-sm font-medium hover:bg-[#151617] transition-colors shadow-sm flex items-center gap-2">
+            <i class="bi bi-cloud-arrow-up text-lg"></i> Upload File
         </button>
     </div>
 </div>
 
 <!-- CATEGORY TABS (Documents, Images, Videos) -->
-<div class="row g-4 mb-5">
-    <div class="col-md-4">
-        <a href="{{ route('category.show', 'document') }}" class="text-decoration-none">
-            <div class="card border-0 shadow-sm h-100 bg-white p-3 card-hover" style="border-left: 5px solid #0d6efd !important;">
-                <div class="card-body d-flex align-items-center">
-                    <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
-                        <i class="bi bi-file-earmark-text fs-2 text-primary"></i>
-                    </div>
-                    <div>
-                        <h5 class="mb-0 fw-bold text-dark">Documents</h5>
-                        <small class="text-muted">{{ $docCount }} Files</small>
-                    </div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-1 ">
+    <a href="{{ route('category.show', 'document') }}" class="group block">
+        <div class="bg-white rounded-[24px] p-6 shadow-sm border border-transparent hover:border-blue-100 hover:shadow-md transition-all duration-200 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
+            <div class="flex items-center gap-4">
+                <div class="bg-blue-50 p-4 rounded-2xl group-hover:scale-110 transition-transform">
+                    <i class="bi bi-file-earmark-text text-2xl text-blue-600"></i>
+                </div>
+                <div>
+                    <h5 class="text-lg font-bold text-[#26282A] mb-1">Documents</h5>
+                    <p class="text-sm text-slate-500">{{ $docCount }} Files</p>
                 </div>
             </div>
-        </a>
-    </div>
+        </div>
+    </a>
 
-    <div class="col-md-4">
-        <a href="{{ route('category.show', 'image') }}" class="text-decoration-none">
-            <div class="card border-0 shadow-sm h-100 bg-white p-3 card-hover" style="border-left: 5px solid #198754 !important;">
-                <div class="card-body d-flex align-items-center">
-                    <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
-                        <i class="bi bi-image fs-2 text-success"></i>
-                    </div>
-                    <div>
-                        <h5 class="mb-0 fw-bold text-dark">Images</h5>
-                        <small class="text-muted">{{ $imgCount }} Files</small>
-                    </div>
+    <a href="{{ route('category.show', 'image') }}" class="group block">
+        <div class="bg-white rounded-[24px] p-6 shadow-sm border border-transparent hover:border-emerald-100 hover:shadow-md transition-all duration-200 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
+            <div class="flex items-center gap-4">
+                <div class="bg-emerald-50 p-4 rounded-2xl group-hover:scale-110 transition-transform">
+                    <i class="bi bi-image text-2xl text-emerald-600"></i>
+                </div>
+                <div>
+                    <h5 class="text-lg font-bold text-[#26282A] mb-1">Images</h5>
+                    <p class="text-sm text-slate-500">{{ $imgCount }} Files</p>
                 </div>
             </div>
-        </a>
-    </div>
+        </div>
+    </a>
 
-    <div class="col-md-4">
-        <a href="{{ route('category.show', 'video') }}" class="text-decoration-none">
-            <div class="card border-0 shadow-sm h-100 bg-white p-3 card-hover" style="border-left: 5px solid #ffc107 !important;">
-                <div class="card-body d-flex align-items-center">
-                    <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">
-                        <i class="bi bi-play-btn fs-2 text-warning"></i>
-                    </div>
-                    <div>
-                        <h5 class="mb-0 fw-bold text-dark">Videos</h5>
-                        <small class="text-muted">{{ $vidCount }} Files</small>
-                    </div>
+    <a href="{{ route('category.show', 'video') }}" class="group block">
+        <div class="bg-white rounded-[24px] p-6 shadow-sm border border-transparent hover:border-amber-100 hover:shadow-md transition-all duration-200 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1.5 h-full bg-amber-400"></div>
+            <div class="flex items-center gap-4">
+                <div class="bg-amber-50 p-4 rounded-2xl group-hover:scale-110 transition-transform">
+                    <i class="bi bi-play-btn text-2xl text-amber-500"></i>
+                </div>
+                <div>
+                    <h5 class="text-lg font-bold text-[#26282A] mb-1">Videos</h5>
+                    <p class="text-sm text-slate-500">{{ $vidCount }} Files</p>
                 </div>
             </div>
-        </a>
-    </div>
+        </div>
+    </a>
 </div>
 
-<!-- MY FOLDERS SECTION -->
-<div class="mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="fw-bold mb-0">My Folders</h5>
-        <a href="{{ route('folders.index') }}" class="btn btn-sm btn-link text-decoration-none p-0">View All</a>
-    </div>
-    <div class="row g-3">
-        @forelse($myFolders as $folder)
-            <div class="col-md-3">
-                <a href="{{ route('folders.show', $folder->id) }}" class="text-decoration-none text-dark">
-                    <div class="card p-3 text-center shadow-sm border-0 bg-white card-hover">
-                        <i class="bi bi-folder-fill text-warning fs-1"></i>
-                        <h6 class="mt-2 mb-1">{{ $folder->name }}</h6>
-                        @if($folder->password) 
-                            <i class="bi bi-lock-fill text-muted small"></i> 
-                        @endif
-                    </div>
-                </a>
-            </div>
-        @empty
-            <div class="col-12 text-center py-4 bg-white rounded shadow-sm border border-dashed">
-                <p class="text-muted mb-0">No folders yet. Click "New Folder" to organize your files.</p>
-            </div>
-        @endforelse
-    </div>
-</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    
+    <!-- RECENT FILES SECTION -->
+    <div class="xl:col-span-2 bg-white rounded-[32px] p-8 shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-[#26282A]">Recent Files</h2>
+        </div>
 
-<!-- RECENT FILES SECTION -->
-<div>
-    <h5 class="fw-bold mb-3">Recent Files</h5>
-    <div class="card border-0 shadow-sm overflow-hidden">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="bg-light">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left whitespace-nowrap">
+                <thead class="text-xs text-slate-400 uppercase bg-white border-b border-slate-100">
                     <tr>
-                        <th class="ps-4 py-3 text-muted fw-semibold">File Name</th>
-                        <th class="py-3 text-muted fw-semibold">Type</th>
-                        <th class="py-3 text-muted fw-semibold">Uploaded At</th>
-                        <th class="pe-4 text-end py-3 text-muted fw-semibold">Action</th>
+                        <th class="py-4 font-medium">File Name</th>
+                        <th class="py-4 font-medium">Type</th>
+                        <th class="py-4 font-medium">Uploaded At</th>
+                        <th class="py-4 font-medium text-right">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($recentFiles as $file)
-                    <tr>
-                        <td class="ps-4">
-                            <i class="bi bi-file-earmark-fill text-primary me-2"></i> {{ $file->name }}
+                    <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
+                        <td class="py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-slate-100 p-2 rounded-lg text-slate-500">
+                                    <i class="bi bi-file-earmark-fill text-lg"></i>
+                                </div>
+                                <span class="font-medium text-[#26282A]">{{ $file->name }}</span>
+                            </div>
                         </td>
-                        <td><span class="badge rounded-pill bg-light text-dark border">{{ ucfirst($file->type) }}</span></td>
-                        <td>{{ $file->created_at->diffForHumans() }}</td>
-                        <td class="pe-4 text-end">
-                            <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn btn-sm btn-light border me-1">
-                                <i class="bi bi-eye"></i>
-                            </a>
-                            <form action="{{ route('files.destroy', $file->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-light border text-danger">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                        <td class="py-4">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                                {{ ucfirst($file->type) }}
+                            </span>
+                        </td>
+                        <td class="py-4 text-slate-600">{{ $file->created_at->diffForHumans() }}</td>
+                        <td class="py-4 text-right">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="text-slate-400 hover:text-blue-600 p-2 rounded-full hover:bg-blue-50 transition-colors">
+                                    <i class="bi bi-eye text-lg"></i>
+                                </a>
+                                <button type="button" 
+        x-data 
+        @click="$dispatch('open-delete-modal', { id: {{ $file->id }}, name: '{{ addslashes($file->name) }}' })" 
+        class="text-slate-400 hover:text-red-600 p-2 rounded-full hover:bg-red-50 transition-colors" 
+        title="Delete">
+    <i class="bi bi-trash text-lg"></i>
+</button>
+                            </div>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center py-5 text-muted">
-                            <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+                        <td colspan="4" class="text-center py-12 text-slate-500">
+                            <i class="bi bi-inbox text-4xl block mb-3 text-slate-300"></i>
                             No recent files found.
                         </td>
                     </tr>
@@ -145,11 +129,39 @@
             </table>
         </div>
     </div>
-</div>
 
-<style>
-    .card-hover { transition: all 0.2s ease-in-out; border: 1px solid transparent !important; }
-    .card-hover:hover { transform: scale(1.02); background-color: #fcfcfc !important; border: 1px solid #dee2e6 !important; }
-</style>
+    <!-- MY FOLDERS SECTION -->
+    <div class="xl:col-span-1 bg-[#26282A] rounded-[32px] p-8 shadow-sm text-white">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold">My Folders</h2>
+            <a href="{{ route('folders.index') }}" class="text-sm text-slate-400 hover:text-white transition-colors">View All</a>
+        </div>
+
+        <div class="space-y-3">
+            @forelse($myFolders as $folder)
+                <a href="{{ route('folders.show', $folder->id) }}" class="block">
+                    <div class="bg-white/10 hover:bg-white/20 border border-white/5 rounded-2xl p-4 flex items-center gap-4 transition-all duration-200">
+                        <div class="bg-amber-400/20 p-3 rounded-xl text-amber-400">
+                            <i class="bi bi-folder-fill text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h6 class="font-bold text-sm mb-0.5">{{ $folder->name }}</h6>
+                            @if($folder->password) 
+                                <span class="text-xs text-slate-400 flex items-center gap-1"><i class="bi bi-lock-fill"></i> Password Protected</span>
+                            @else
+                                <span class="text-xs text-slate-400">Public Access</span>
+                            @endif
+                        </div>
+                        <i class="bi bi-chevron-right text-slate-500"></i>
+                    </div>
+                </a>
+            @empty
+                <div class="text-center py-8 bg-white/5 rounded-2xl border border-white/10 border-dashed">
+                    <p class="text-slate-400 text-sm mb-0">No folders yet.</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</div>
 
 @endsection

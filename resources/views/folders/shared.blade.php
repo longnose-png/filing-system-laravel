@@ -1,24 +1,29 @@
 @extends('layouts.master')
 
 @section('content')
-<h2 class="fw-bold mb-4">Shared Folders</h2>
+<div class="mb-8">
+    <h2 class="text-2xl font-bold text-[#26282A]">Shared Folders</h2>
+</div>
 
-<div class="row g-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     @forelse($sharedFolders as $folder)
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm p-3 text-center h-100 bg-white shadow-hover">
-            <!-- Link to enter the shared folder -->
-            <a href="{{ route('folders.show', $folder->id) }}" class="text-decoration-none text-dark">
-                <i class="bi bi-people-fill text-info" style="font-size: 3rem;"></i>
-                <h6 class="mt-2 fw-bold">{{ $folder->name }}</h6>
-                <p class="text-muted small mb-0">Owner: {{ $folder->user->name }}</p>
-            </a>
+    <a href="{{ route('folders.show', $folder->id) }}" class="group block">
+        <div class="bg-white rounded-[24px] p-6 text-center shadow-sm border border-transparent hover:border-cyan-100 hover:shadow-md transition-all duration-200 h-full flex flex-col justify-center">
+            
+            <div class="inline-flex bg-cyan-50 p-4 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300 mx-auto">
+                <i class="bi bi-people-fill text-4xl text-cyan-500"></i>
+            </div>
+            
+            <h6 class="font-bold text-[#26282A] truncate mb-1" title="{{ $folder->name }}">{{ $folder->name }}</h6>
+            <p class="text-xs text-slate-500">Owner: <span class="font-medium text-slate-700">{{ $folder->user->name }}</span></p>
+            
         </div>
-    </div>
+    </a>
     @empty
-    <div class="col-12 text-center py-5 bg-white rounded shadow-sm border border-dashed">
-        <i class="bi bi-share fs-1 text-muted d-block mb-2"></i>
-        <p class="text-muted">No folders have been shared with you yet.</p>
+    <div class="col-span-full bg-white rounded-[32px] p-12 text-center shadow-sm border border-slate-100 border-dashed">
+        <i class="bi bi-share text-5xl text-slate-300 mb-4 block"></i>
+        <h3 class="text-xl font-bold text-[#26282A] mb-2">No shared folders</h3>
+        <p class="text-slate-500">No folders have been shared with you yet.</p>
     </div>
     @endforelse
 </div>
