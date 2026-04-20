@@ -18,6 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/category/{type}', [FileController::class, 'category'])->name('category.show');
     Route::get('/recent-files', [FileController::class, 'recent'])->name('files.recent');
     Route::get('/activity-logs', [FileController::class, 'logs'])->name('logs.index');
+    Route::get('/login-history', [App\Http\Controllers\FileController::class, 'loginLogs'])->name('logs.login');
 
     // FOLDERS (Cleaned up and added the missing Delete route)
     Route::get('/my-folders', [FolderController::class, 'index'])->name('folders.index');

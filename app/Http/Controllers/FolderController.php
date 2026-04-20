@@ -47,6 +47,15 @@ class FolderController extends Controller
         ]);
 
         return back()->with('success', 'Folder created successfully!');
+
+        Folder::create([
+        'user_id' => auth()->id(),
+        'name' => $request->name,
+        'parent_id' => $request->parent_id, // This allows sub-folders
+        'password' => $request->password ? Hash::make($request->password) : null,
+        ]);
+
+        return back()->with('success', 'Folder/Sub-folder created!');
     }
 
     /**

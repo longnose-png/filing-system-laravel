@@ -67,13 +67,31 @@
                     <i class="bi bi-person-plus text-lg text-slate-400"></i>
                     <span class="font-medium text-sm">My Contacts</span>
                 </a>
-                <a href="{{ route('logs.index') }}" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 text-slate-500 hover:bg-slate-100 hover:text-[#26282A]">
-                    <i class="bi bi-journal-text text-lg text-slate-400"></i>
-                    <span class="font-medium text-sm">Activity Logs</span>
+                
+            </div>
+        </div>
+
+        <!-- History Section (Inside the scrollable area) -->
+        <div class="mb-8">
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-4">History</div>
+            <div class="space-y-1">
+                <a href="{{ route('logs.login') }}" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 {{ request()->routeIs('logs.login') ? 'bg-[#26282A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-100 hover:text-[#26282A]' }}">
+                    <i class="bi bi-shield-check text-lg {{ request()->routeIs('logs.login') ? 'text-white' : 'text-slate-400' }}"></i>
+                    <span class="font-medium text-sm">My Logs</span>
+                </a>
+                <a href="{{ route('logs.index') }}" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 {{ request()->routeIs('logs.index') ? 'bg-[#26282A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-100 hover:text-[#26282A]' }}">
+                <i class="bi bi-activity text-lg"></i>
+                <span class="font-medium text-sm">Account Activities</span>
                 </a>
             </div>
         </div>
+    </div> <!-- This closes the flex-1 overflow-y-auto div -->
+
+    <!-- User Profile (Keep this at the very bottom) -->
+    <div class="mt-auto pt-6 flex flex-col items-center justify-center text-center border-t border-slate-100">
+        <!-- ... existing profile code ... -->
     </div>
+    
 
     <!-- User Profile -->
     <div class="mt-auto pt-6 flex flex-col items-center justify-center text-center border-t border-slate-100">

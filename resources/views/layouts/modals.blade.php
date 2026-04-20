@@ -29,12 +29,12 @@
     </div>
 </div>
 
-<!-- Upload File Modal -->
+<<!-- Upload File Modal -->
 <div x-data="{ open: false }" @open-upload-modal.window="open = true">
     <div x-show="open" style="display: none;" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div @click.away="open = false" class="bg-white rounded-[32px] w-full max-w-md shadow-xl overflow-hidden">
             <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-                <h3 class="text-lg font-bold text-[#26282A]">Upload File</h3>
+                <h3 class="text-lg font-bold text-[#26282A]">Bulk Upload Files</h3>
                 <button @click="open = false" type="button" class="text-slate-400 hover:text-[#26282A] p-2 rounded-full hover:bg-slate-100">
                     <i class="bi bi-x-lg"></i>
                 </button>
@@ -48,9 +48,12 @@
                         <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                             <i class="bi bi-cloud-arrow-up text-xl text-slate-400"></i>
                         </div>
-                        <p class="text-sm font-medium text-[#26282A] mb-1">Click to upload or drag and drop</p>
-                        <p class="text-xs text-slate-500">Max file size: 10MB</p>
-                        <input type="file" name="file" id="fileInput" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required>
+
+                        <!-- Only ONE input, set to multiple -->
+                        <input type="file" name="files[]" id="fileInput" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" multiple required onchange="updateFileName(this)">
+                        
+                        <p id="file-label-text" class="text-sm font-medium text-[#26282A] mb-1">Click to select multiple files</p>
+                        <p class="text-xs text-slate-500">Images, Videos, or Documents (Max 10MB each)</p>
                     </div>
                 </div>
                 <div class="px-6 py-4 bg-slate-50 flex justify-end gap-3">
@@ -61,6 +64,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    function updateFileName(input) {
+        const label = document.getElementById('file-label-text');
+        label.innerText = input.files.length + " files selected";
+    }
+</script>
 
 <!-- Share Folder Modal -->
 <div x-data="{ open: false }" @open-share-modal.window="open = true">
